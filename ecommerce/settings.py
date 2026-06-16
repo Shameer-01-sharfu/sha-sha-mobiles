@@ -16,7 +16,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'store', # Unga main store app inga register aayiduchu
+    
+    # Intha line-ah maathunga (if already 'store' iruntha athuku badhila ithai podunga)
+    'store.apps.StoreConfig', 
 ]
 
 MIDDLEWARE = [
