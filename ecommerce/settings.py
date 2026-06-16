@@ -5,7 +5,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-local-dev-key-change-this-in-production'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['sha-sha-mobiles.onrender.com', '127.0.0.1', 'localhost']
 
