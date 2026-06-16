@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-local-dev-key-change-this-in-production'
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['sha-sha-mobiles.onrender.com', '127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -83,6 +83,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Media files configuration (Unga products images load aagurathuku)
+# Media files configuration (Unga products images loaCSRF_TRUSTED_ORIGINS = ['https://sha-sha-mobiles.onrender.com']d aagurathuku)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+CSRF_TRUSTED_ORIGINS = ['https://sha-sha-mobiles.onrender.com']
