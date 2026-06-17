@@ -4,6 +4,7 @@ from .models import Product, CartItem, OrderHistory
 
 # 1. Store Home Page with Search and Detail Modal data support
 def product_list(request):
+    from .models import Product, CartItem
     search_query = request.GET.get('search', '')
     if search_query:
         products = Product.objects.filter(name__icontains=search_query)
@@ -14,7 +15,8 @@ def product_list(request):
     return render(request, 'store/products.html', {
         'products': products,
         'cart_count': cart_count,
-        'show_products': True
+        'show_cart': False,
+        'show_orders': False
     })
 
 # 2. Add Item to Cart Logic
