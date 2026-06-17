@@ -59,7 +59,7 @@ def place_order(request):
         total_price = sum(item.product.price * item.quantity for item in cart_items)
         product_names = ", ".join([item.product.name for item in cart_items])
         
-        # 📌 FIX: Models-la irukura correct-ana table name 'Order'-ah inga track panrom!
+        # Permanent Database Record Creation
         Order.objects.create(
             customer_name=name,
             customer_phone=phone,
@@ -68,24 +68,18 @@ def place_order(request):
             price=total_price
         )
         
-        # Order safe-ah database vizhundhadhum cart-ah clear panrom
+        # Clear Cart
         Cart.objects.all().delete()
         
-        # Admin Email Notification Channel Setup
+        # Safe Isolation Notification System Execution
         try:
-            subject = '🔥 SHA & SHA MOBILES - New Order Received!'
-            body_message = f"Hi Admin,\n\nPudhusa oru customer order potrukanga!\n\nDetails:\nCustomer Name: {name}\nPhone: {phone}\nAddress: {address}\nMobiles Ordered: {product_names}\nTotal Price: ₹{total_price}\n\nCheck your Admin Panel dashboard immediately!"
+            subject = 'SHA & SHA MOBILES - New Order'
+            body = f"Name: {name}\nPhone: {phone}\nAddress: {address}\nItems: {product_names}\nTotal: {total_price}"
+            send_mail(subject, body, settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER], fail_silently=True)
+        except:
+            pass
             
-            send_mail(
-                subject,
-                body_message,
-                settings.EMAIL_HOST_USER,
-                [settings.EMAIL_HOST_USER],
-                fail_silently=False,
-            )
-            messages.success(request, f"Hi {name}, Unga order successfully place aayiduchu! We will reach you soon! 🎉")
-        except Exception as e:
-            messages.warning(request, f"Order safe-ah place aayiduchu, aana email notification anuppula: {str(e)}")
-            
+        messages.success(request, f"Hi {name}, Unga order successfully place aayiduchu! 🎉")
         return redirect('product_list')
+        
     return redirect('cart_view')
