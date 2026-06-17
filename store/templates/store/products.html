@@ -23,9 +23,9 @@
         .cart-badge { background-color: #ff9f00; color: white; border-radius: 50%; padding: 1px 6px; font-size: 11px; position: absolute; top: -10px; right: -12px; }
         .main-wrapper { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
         
-        /* Product Cards */
+        /* Flipkart Style Product Cards Configuration */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-        .product-card { background: #fff; border-radius: 4px; padding: 15px; border: 1px solid #e0e0e0; display: flex; flex-direction: column; justify-content: space-between; transition: box-shadow 0.2s; }
+        .product-card { background: #fff; border-radius: 4px; padding: 15px; border: 1px solid #e0e0e0; display: flex; flex-direction: column; justify-content: space-between; transition: box-shadow 0.2s; min-height: 400px; }
         .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .img-box { height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; cursor: pointer; }
         .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
@@ -58,6 +58,15 @@
     </div>
 
     <div class="main-wrapper">
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} alert-dismissible fade show shadow-sm" role="alert">
+                    <strong class="fw-bold">System Notification:</strong> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
         
         {% if show_cart %}
             <h4 class="mb-4">My Shopping Cart Summary</h4>
@@ -128,19 +137,19 @@
                             {% if p.image %}
                                 <img src="{{ p.image.url }}" alt="{{ p.name }}">
                             {% else %}
-                                <div class="text-muted small">No Image</div>
+                                <div class="text-muted small">No Live Image Available</div>
                             {% endif %}
                         </div>
                         
-                        <div>
-                            <h5 class="fw-bold text-dark mb-1" style="font-size: 1.1rem; text-align: center;">{{ p.name }}</h5>
-                            <p class="text-muted small text-center" style="height: 38px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{ p.description }}</p>
-                            <div class="price text-primary text-center">₹{{ p.price }}</div>
+                        <div class="text-center mt-2">
+                            <h6 class="fw-bold text-dark mb-1" style="font-size: 1.05rem;">{{ p.name }}</h6>
+                            <p class="text-muted small px-1 mb-2 text-truncate" style="max-width: 100%;">{{ p.description }}</p>
+                            <div class="price text-primary mb-2">₹{{ p.price }}</div>
                         </div>
                         
-                        <div class="d-flex gap-2">
-                            <a href="{% url 'add_to_cart' product_id=p.id %}" class="btn-cart">Add to Cart</a>
-                            <a href="{% url 'checkout' %}" class="btn-buy">Buy Now</a>
+                        <div class="d-flex gap-2 mt-auto">
+                            <a href="{% url 'add_to_cart' product_id=p.id %}" class="btn-cart text-decoration-none">Add to Cart</a>
+                            <a href="{% url 'cart_view' %}" class="btn-buy text-decoration-none">Buy Now</a>
                         </div>
                     </div>
                 {% endfor %}
