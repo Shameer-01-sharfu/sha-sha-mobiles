@@ -149,7 +149,7 @@
                         
                         <div class="d-flex gap-2 mt-auto">
                             <a href="{% url 'add_to_cart' product_id=p.id %}" class="btn-cart text-decoration-none">Add to Cart</a>
-                            <a href="{% url 'cart_view' %}" class="btn-buy text-decoration-none">Buy Now</a>
+                            <a href="{% url 'but_now' product_id=p.id %}" class="btn-buy text-decoration-none">Buy Now</a>
                         </div>
                     </div>
                 {% endfor %}

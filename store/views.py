@@ -36,7 +36,17 @@ def add_to_cart(request, product_id):
         item.save()
 
     return redirect('cart_view')
+def buy_now(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
 
+    CartItem.objects.all().delete()
+
+    CartItem.objects.create(
+        product=product,
+        quantity=1
+    )
+
+    return redirect('cart_view')
 
 def cart_view(request):
     cart_items = CartItem.objects.all()
