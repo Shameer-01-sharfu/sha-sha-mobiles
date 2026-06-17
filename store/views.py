@@ -10,7 +10,6 @@ def product_list(request):
     if search:
         products = products.filter(name__icontains=search)
     
-    # Cart database numbers tracking
     cart_count = Cart.objects.count()
     return render(request, 'store/products.html', {
         'products': products, 
@@ -33,7 +32,6 @@ def cart_view(request):
 
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    # Puthusa cart item add panrom
     Cart.objects.create(product=product, quantity=1)
     return redirect('cart_view')
 
@@ -58,13 +56,10 @@ def place_order(request):
             messages.error(request, "Your cart is empty!")
             return redirect('product_list')
             
-        # Total calculate panni, database-la permanent-ah permanent order records vizhuga backend create panrom
         total_price = sum(item.product.price * item.quantity for item in cart_items)
-        
-        # Product names details loop join variables text matrix layout config strings
         product_names = ", ".join([item.product.name for item in cart_items])
         
-        # Permanent-ah Order database records-la entry vizha idho:
+        # 📌 FIX: Models-la irukura correct-ana table name 'Order'-ah inga track panrom!
         Order.objects.create(
             customer_name=name,
             customer_phone=phone,
@@ -73,25 +68,24 @@ def place_order(request):
             price=total_price
         )
         
-        # Order backend save aanadhuku apram cart clear panrom (Delete aagadhu, order safe!)
+        # Order safe-ah database vizhundhadhum cart-ah clear panrom
         Cart.objects.all().delete()
         
-        # Real-time Admin Email Notification Function Trigger logic setup
+        # Admin Email Notification Channel Setup
         try:
             subject = '🔥 SHA & SHA MOBILES - New Order Received!'
-            body_message = f"Hi Admin,\n\nPudhusa oru customer order potrukanga!\n\nDetails:\nCustomer Name: {name}\nPhone: {phone}\nAddress: {address}\nMobiles Ordered: {product_names}\nTotal Price: ₹{total_price}\n\nCheck your Admin Panel dashboard status immediately!"
+            body_message = f"Hi Admin,\n\nPudhusa oru customer order potrukanga!\n\nDetails:\nCustomer Name: {name}\nPhone: {phone}\nAddress: {address}\nMobiles Ordered: {product_names}\nTotal Price: ₹{total_price}\n\nCheck your Admin Panel dashboard immediately!"
             
             send_mail(
                 subject,
                 body_message,
                 settings.EMAIL_HOST_USER,
-                [settings.EMAIL_HOST_USER], # Admin template configuration targets setup mail lines
+                [settings.EMAIL_HOST_USER],
                 fail_silently=False,
             )
-            # Live Success Feedback to Customers Alert Messages
             messages.success(request, f"Hi {name}, Unga order successfully place aayiduchu! We will reach you soon! 🎉")
         except Exception as e:
-            messages.warning(request, f"Order safe-ah placed, aana Admin notification parameters load issue: {str(e)}")
+            messages.warning(request, f"Order safe-ah place aayiduchu, aana email notification anuppula: {str(e)}")
             
         return redirect('product_list')
     return redirect('cart_view')
