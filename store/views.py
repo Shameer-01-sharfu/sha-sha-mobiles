@@ -85,3 +85,10 @@ def order_history_view(request):
         'cart_count': cart_count,
         'show_orders': True
     })
+def checkout(request):
+    # Navbar-la quantity error varama iruka count edukuroom
+    cart_count = CartItem.objects.count() if 'CartItem' in globals() else 0
+    
+    return render(request, 'store/checkout.html', {
+        'cart_count': cart_count
+    })

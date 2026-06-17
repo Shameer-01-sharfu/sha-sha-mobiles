@@ -1,0 +1,9 @@
+<h2>Shipping Details & Place Order</h2>
+<form method="POST" action="{% url 'place_order' %}">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="Your Name" required><br>
+    <input type="text" name="phone" placeholder="Phone Number" required><br>
+    <textarea name="address" placeholder="Shipping Address" required></textarea><br>
+    <p><strong>Payment Mode:</strong> Cash on Delivery (COD)</p>
+    <button type="submit">Place Order</button>
+</form>
