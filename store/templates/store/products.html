@@ -129,7 +129,7 @@
             ... (img box specs content variable lines) ...
             <div class="price">Price: ₹{{ p.price }}</div>
             <div class="d-flex gap-2">
-                <a href="{% url 'add_to_cart' p.id %}" class="btn-cart">Add to Cart</a>
+                <a href="{% url 'add_to_cart' product_id=p.id %}" class="btn-cart">Add to Cart</a>
                 <a href="{% url 'checkout' %}" class="btn-buy">Buy Now</a> </div>
         </div>
     {% endfor %}
