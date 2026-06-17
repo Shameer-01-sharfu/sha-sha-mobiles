@@ -11,7 +11,6 @@
         .fk-navbar { background-color: #2874f0; padding: 12px 0; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
         
-        /* Flex wrapper to seamlessly combine logo image and text */
         .brand-logo-wrapper { display: flex; align-items: center; text-decoration: none; }
         .brand-logo-img { height: 32px; width: auto; vertical-align: middle; }
         .brand-logo-text { font-size: 22px; font-weight: 700; color: white; font-style: italic; margin-left: 10px; }
@@ -24,17 +23,16 @@
         .cart-badge { background-color: #ff9f00; color: white; border-radius: 50%; padding: 1px 6px; font-size: 11px; position: absolute; top: -10px; right: -12px; }
         .main-wrapper { max-width: 1200px; margin: 30px auto; padding: 0 15px; }
         
-        /* Product Cards */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-        .product-card { background: #fff; border-radius: 4px; padding: 15px; border: 1px solid #e0e0e0; display: flex; flex-direction: column; justify-content: space-between; transition: box-shadow 0.2s; }
-        .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .img-box { height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; cursor: pointer; }
+        /* Product Cards Grid Structure */
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
+        .product-card { background: #fff; border-radius: 8px; padding: 20px; border: 1px solid #e0e0e0; display: flex; flex-direction: column; justify-content: space-between; transition: box-shadow 0.2s; min-height: 420px; text-align: center; }
+        .product-card:hover { box-shadow: 0 4px 15px rgba(0,0,0,0.15); cursor: pointer; }
+        .img-box { height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; background: white; }
         .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .price { font-size: 18px; font-weight: 700; color: #212121; margin: 8px 0; }
-        .btn-cart { background-color: #ff9f00; color: white; border: none; padding: 8px; border-radius: 2px; font-weight: 500; text-decoration: none; text-align: center; width: 50%; }
-        .btn-buy { background-color: #fb641b; color: white; border: none; padding: 8px; border-radius: 2px; font-weight: 500; text-decoration: none; text-align: center; width: 50%; }
+        .price { font-size: 20px; font-weight: 700; color: #212121; margin: 10px 0; }
+        .btn-cart { background-color: #ff9f00; color: white; border: none; padding: 10px; border-radius: 4px; font-weight: bold; text-decoration: none; text-align: center; width: 50%; }
+        .btn-buy { background-color: #fb641b; color: white; border: none; padding: 10px; border-radius: 4px; font-weight: bold; text-decoration: none; text-align: center; width: 50%; }
         
-        /* Footer styling for your Copyright block */
         footer { margin-top: 60px; padding: 20px 0; text-align: center; background-color: #fff; border-top: 1px solid #e0e0e0; color: #555; font-size: 14px; }
     </style>
 </head>
@@ -122,27 +120,34 @@
             {% endif %}
 
         {% else %}
-           <h4 class="mb-4 text-muted">Featured Smartphones</h4>
-<div class="products-grid">
-    {% for p in products %}
-        <div class="product-card" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px;">
-            {% if p.image %}
-                <img src="{{ p.image.url }}" alt="{{ p.name }}" style="width: 100%; max-height: 200px; object-fit: contain; margin-bottom: 15px;">
-            {% endif %}
-            
-            <h5 class="fw-bold">{{ p.name }}</h5>
-            
-            <p class="text-muted small">{{ p.description }}</p>
-            
-            <div class="price fw-bold text-primary mb-3">₹{{ p.price }}</div>
-            
-            <div class="d-flex gap-2">
-                <a href="{% url 'add_to_cart' product_id=p.id %}" class="btn btn-warning w-100">Add to Cart</a>
-                <a href="{% url 'checkout' %}" class="btn btn-orange w-100" style="background-color: #fb641b; color: white;">Buy Now</a>
+            <h4 class="mb-4 text-muted">Featured Smartphones</h4>
+            <div class="products-grid">
+                {% for p in products %}
+                    <div class="product-card">
+                        <div class="img-box" onclick="showProductDetails('{{ p.name|escapejs }}', '{{ p.price|escapejs }}', '{{ p.description|escapejs }}', '{% if p.image %}{{ p.image.url|escapejs }}{% endif %}')">
+                            {% if p.image %}
+                                <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                            {% else %}
+                                <div class="text-muted small">No Product Image Provided</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div>
+                            <h5 class="fw-bold text-dark mb-1" style="font-size: 1.15rem;">{{ p.name }}</h5>
+                            <p class="text-muted small px-1" style="height: 38px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{ p.description }}</p>
+                            <div class="price text-primary">₹{{ p.price }}</div>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'add_to_cart' product_id=p.id %}" class="btn-cart">Add to Cart</a>
+                            <a href="{% url 'checkout' %}" class="btn-buy">Buy Now</a>
+                        </div>
+                    </div>
+                {% endfor %}
             </div>
-        </div>
-    {% endfor %}
-</div>
+        {% endif %}
+        
+    </div>
 
     <footer>
         <div class="container">
@@ -155,7 +160,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold text-dark" id="modalTitle"></h5>
-                    <button type="button" class="btn-close" data-vis="modal" onclick="closeModal()"></button>
+                    <button type="button" class="btn-close" onclick="closeModal()"></button>
                 </div>
                 <div class="modal-body text-center">
                     <img id="modalImg" src="" style="max-height:220px; object-fit:contain;" class="mb-3">
@@ -183,7 +188,12 @@
             document.getElementById('modalTitle').innerText = name;
             document.getElementById('modalPrice').innerText = "₹" + price;
             document.getElementById('modalDesc').innerText = description;
-            document.getElementById('modalImg').src = imgUrl;
+            if (imgUrl && imgUrl !== '') {
+                document.getElementById('modalImg').src = imgUrl;
+                document.getElementById('modalImg').style.display = 'inline-block';
+            } else {
+                document.getElementById('modalImg').style.display = 'none';
+            }
             bootstrapModal.show();
         }
 
