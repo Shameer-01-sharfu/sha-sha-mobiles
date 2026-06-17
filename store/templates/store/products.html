@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,12 @@
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f1f3f6; }
         .fk-navbar { background-color: #2874f0; padding: 12px 0; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         .nav-container { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 15px; }
-        .brand-logo { font-size: 22px; font-weight: 700; color: white; text-decoration: none; font-style: italic; }
+        
+        /* Flex wrapper to seamlessly combine logo image and text */
+        .brand-logo-wrapper { display: flex; align-items: center; text-decoration: none; }
+        .brand-logo-img { height: 32px; width: auto; vertical-align: middle; }
+        .brand-logo-text { font-size: 22px; font-weight: 700; color: white; font-style: italic; margin-left: 10px; }
+        
         .search-container { flex-grow: 1; max-width: 500px; margin: 0 20px; display: flex; background: #fff; border-radius: 2px; }
         .search-bar { border: none; padding: 8px 16px; width: 100%; outline: none; }
         .search-btn { background: #fff; border: none; padding: 0 15px; color: #2874f0; font-weight: bold; }
@@ -27,13 +33,20 @@
         .price { font-size: 18px; font-weight: 700; color: #212121; margin: 8px 0; }
         .btn-cart { background-color: #ff9f00; color: white; border: none; padding: 8px; border-radius: 2px; font-weight: 500; text-decoration: none; text-align: center; width: 50%; }
         .btn-buy { background-color: #fb641b; color: white; border: none; padding: 8px; border-radius: 2px; font-weight: 500; text-decoration: none; text-align: center; width: 50%; }
+        
+        /* Footer styling for your Copyright block */
+        footer { margin-top: 60px; padding: 20px 0; text-align: center; background-color: #fff; border-top: 1px solid #e0e0e0; color: #555; font-size: 14px; }
     </style>
 </head>
 <body>
 
     <div class="fk-navbar">
         <div class="nav-container">
-            <a href="{% url 'product_list' %}" class="brand-logo">SHA & SHA MOBILES</a>
+            <a href="{% url 'product_list' %}" class="brand-logo-wrapper">
+                <img src="{% static 'images/logo.png' %}" alt="SHA & SHA MOBILES Logo" class="brand-logo-img">
+                <span class="brand-logo-text">SHA & SHA MOBILES</span>
+            </a>
+            
             <form action="{% url 'product_list' %}" method="GET" class="search-container">
                 <input type="text" name="search" class="search-bar" placeholder="Search for mobiles, specs..." value="{{ request.GET.search }}">
                 <button type="submit" class="search-btn">Search</button>
@@ -127,6 +140,12 @@
             </div>
         {% endif %}
     </div>
+
+    <footer>
+        <div class="container">
+            <p class="mb-0">&copy; 2026 SHA & SHA MOBILES. All rights reserved.</p>
+        </div>
+    </footer>
 
     <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
