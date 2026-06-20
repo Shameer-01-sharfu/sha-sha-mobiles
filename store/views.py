@@ -80,8 +80,11 @@ def remove_from_cart(request, item_id):
     return redirect('cart_view')
 
 
+@login_required
 def order_history(request):
-    orders = Order.objects.all().order_by('-id')
+    orders = Order.objects.filter(
+        user=request.user
+    ).order_by('-id')
 
     return render(request, 'store/products.html', {
         'show_orders': True,
@@ -115,6 +118,7 @@ def place_order(request):
         )
 
         Order.objects.create(
+            user=request.user,
             customer_name=name,
             customer_phone=phone,
             customer_address=address,

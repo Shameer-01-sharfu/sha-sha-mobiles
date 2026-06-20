@@ -35,6 +35,12 @@ class CartItem(models.Model):
 
 
 class Order(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
     customer_name = models.CharField(max_length=255)
     customer_phone = models.CharField(max_length=20)
     customer_address = models.TextField()
