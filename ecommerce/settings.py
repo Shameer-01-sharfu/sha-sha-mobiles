@@ -117,7 +117,14 @@ CLOUDINARY_STORAGE = {
     'API_KEY': '795878181251242',
     'API_SECRET': 'YOUR_NEW_SECRET',
 }
+import cloudinary
 
+cloudinary.config(
+    cloud_name='dqhxoykdw',
+    api_key='795878181251242',
+    api_secret='YOUR_NEW_SECRET',
+    secure=True
+)
 # ========================
 # CSRF
 # ========================
