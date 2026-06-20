@@ -16,10 +16,12 @@ def product_list(request):
     search = request.GET.get('search')
     if search:
         products = products.filter(name__icontains=search)
-
-    cart_count = CartItem.objects.filter(
-        user=request.user
-    ).count()
+    if request.user.is_authenticated:
+        cart_count = CartItem.objects.filter(
+            user=request.user
+        ).count()
+    else:
+        cart_count = 0
 
     return render(request, 'store/products.html', {
         'products': products,
