@@ -11,6 +11,13 @@ class OrderAdmin(admin.ModelAdmin):
         'price',
         'created_at'
     )
+    readonly_fields = (
+        'customer_name',
+        'customer_phone',
+        'customer_address',
+        'product_name',
+        'price',
+    )
 
     ordering = ('-created_at',)
 
