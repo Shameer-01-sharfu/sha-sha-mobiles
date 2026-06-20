@@ -11,9 +11,7 @@ from .models import Product, CartItem, Order
 
 
 def product_list(request):
-    products = Product.objects.filter(
-        user=request.user
-    ).count()
+    products = Product.objects.all()
 
     search = request.GET.get('search')
     if search:
