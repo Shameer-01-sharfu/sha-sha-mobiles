@@ -1,14 +1,25 @@
 import os
 from pathlib import Path
 import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ========================
+# SECURITY
+# ========================
 SECRET_KEY = 'django-insecure-local-dev-key-change-this-in-production'
 
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['sha-sha-mobiles.onrender.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    'sha-sha-mobiles.onrender.com',
+    '127.0.0.1',
+    'localhost'
+]
 
+# ========================
+# INSTALLED APPS
+# ========================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -16,11 +27,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Intha line-ah maathunga (if already 'store' iruntha athuku badhila ithai podunga)
-    'store.apps.StoreConfig', 
+
+    # Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
+
+    # Your app
+    'store.apps.StoreConfig',
 ]
 
+# ========================
+# MIDDLEWARE
+# ========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -34,6 +52,9 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'ecommerce.urls'
 
+# ========================
+# TEMPLATES
+# ========================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -52,6 +73,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
+# ========================
+# DATABASE
+# ========================
 DATABASES = {
     'default': dj_database_url.config(
         default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
@@ -59,33 +83,49 @@ DATABASES = {
     )
 }
 
+# ========================
+# PASSWORD VALIDATION
+# ========================
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
+# ========================
+# INTERNATIONALIZATION
+# ========================
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
-STATIC_URL = 'static/'
+# ========================
+# STATIC FILES
+# ========================
+STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# ========================
+# CLOUDINARY (IMPORTANT FIX)
+# ========================
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dqhxoykdw',
+    'API_KEY': '795878181251242',
+    'API_SECRET': 'LerLcTqcCENKOmvwnw17hFVGRwM'
+}
+
+# ========================
+# SECURITY (Render)
+# ========================
+CSRF_TRUSTED_ORIGINS = [
+    'https://sha-sha-mobiles.onrender.com'
+]
+
+# ========================
+# DEFAULT AUTO FIELD
+# ========================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-# Media files configuration (Unga products images loaCSRF_TRUSTED_ORIGINS = ['https://sha-sha-mobiles.onrender.com']d aagurathuku)
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-CSRF_TRUSTED_ORIGINS = ['https://sha-sha-mobiles.onrender.com']
