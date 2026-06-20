@@ -9,7 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ========================
 SECRET_KEY = 'django-insecure-local-dev-key-change-this-in-production'
 
-DEBUG = False
+# TEMPORARY - Error kandupidikka
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'sha-sha-mobiles.onrender.com',
@@ -28,11 +29,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Cloudinary
     'cloudinary',
     'cloudinary_storage',
 
-    # Your app
     'store.apps.StoreConfig',
 ]
 
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -108,24 +108,21 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # ========================
-# CLOUDINARY (IMPORTANT FIX)
+# CLOUDINARY
 # ========================
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': 'dqhxoykdw',
     'API_KEY': '795878181251242',
-    'API_SECRET': 'LerLcTqcCENKOmvwnw17hFVGRwM'
+    'API_SECRET': 'YOUR_NEW_SECRET',
 }
 
 # ========================
-# SECURITY (Render)
+# CSRF
 # ========================
 CSRF_TRUSTED_ORIGINS = [
     'https://sha-sha-mobiles.onrender.com'
 ]
 
-# ========================
-# DEFAULT AUTO FIELD
-# ========================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
