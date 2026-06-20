@@ -11,13 +11,17 @@ from .models import Product, CartItem, Order
 
 
 def product_list(request):
-    products = Product.objects.all()
+    products = Product.objects.filter(
+        user=request.user
+    ).count()
 
     search = request.GET.get('search')
     if search:
         products = products.filter(name__icontains=search)
 
-    cart_count = CartItem.objects.count()
+    cart_count = CartItem.objects.filter(
+        user=request.user
+    ).count()
 
     return render(request, 'store/products.html', {
         'products': products,
@@ -68,12 +72,13 @@ def cart_view(request):
         item.product.price * item.quantity
         for item in cart_items
     )
+    cart_count = cart_items.count()
 
     return render(request, 'store/products.html', {
         'show_cart': True,
         'cart_items': cart_items,
         'total_price': total_price,
-        'cart_count': cart_items.count(),
+        'cart_count': cart_count,
         'show_orders': False,
     })
 
@@ -99,7 +104,9 @@ def order_history(request):
     return render(request, 'store/products.html', {
         'show_orders': True,
         'orders': orders,
-        'cart_count': CartItem.objects.count(),
+        'cart_count': CartItem.objects.filter(
+            user=request.user
+        ).count(),
         'show_cart': False,
     })
 
