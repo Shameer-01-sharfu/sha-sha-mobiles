@@ -13,6 +13,13 @@ from .models import Product, CartItem, Order
 def product_list(request):
     products = Product.objects.all()
 
+    category = request.GET.get('category')
+
+    if category:
+        products = products.filter(
+           category=category
+        )
+
     search = request.GET.get('search')
     if search:
         products = products.filter(name__icontains=search)

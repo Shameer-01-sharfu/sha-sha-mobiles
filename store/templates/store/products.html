@@ -82,6 +82,39 @@
     </div>
 
     <div class="main-wrapper">
+        <div class="mb-4">
+
+    <a href="{% url 'product_list' %}"
+       class="btn btn-outline-primary btn-sm">
+        All
+    </a>
+
+    <a href="?category=Apple"
+       class="btn btn-outline-dark btn-sm">
+        Apple
+    </a>
+
+    <a href="?category=Samsung"
+       class="btn btn-outline-dark btn-sm">
+        Samsung
+    </a>
+
+    <a href="?category=Vivo"
+       class="btn btn-outline-dark btn-sm">
+        Vivo
+    </a>
+
+    <a href="?category=Oppo"
+       class="btn btn-outline-dark btn-sm">
+        Oppo
+    </a>
+
+    <a href="?category=Realme"
+       class="btn btn-outline-dark btn-sm">
+        Realme
+    </a>
+
+</div>
         
         {% if messages %}
             {% for message in messages %}

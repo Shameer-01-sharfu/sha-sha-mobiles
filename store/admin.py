@@ -21,5 +21,11 @@ class OrderAdmin(admin.ModelAdmin):
 
     ordering = ('-created_at',)
 
-admin.site.register(Product)
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'category',
+        'price'
+    )
 admin.site.register(CartItem)
