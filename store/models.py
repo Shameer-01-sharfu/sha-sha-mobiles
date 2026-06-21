@@ -27,13 +27,15 @@ class Product(models.Model):
         max_digits=10,
         decimal_places=2
     )
+    stock = models.PositiveIntegerField(default=0)
 
     image = CloudinaryField(
         'image',
         blank=True,
         null=True
     )
-
+    
+  
     def __str__(self):
         return self.name
 

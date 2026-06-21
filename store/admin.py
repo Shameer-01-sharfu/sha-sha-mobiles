@@ -26,6 +26,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'category',
-        'price'
+        'price',
+        'stock',
     )
 admin.site.register(CartItem)

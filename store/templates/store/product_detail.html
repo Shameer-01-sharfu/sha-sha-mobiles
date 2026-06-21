@@ -33,12 +33,16 @@
             <h2>{{ product.name }}</h2>
 
             <h3 class="text-success mt-3">
-                ₹{{ product.price }}
-            </h3>
+    ₹{{ product.price }}
+</h3>
 
-            <hr>
+<p class="fw-bold text-primary">
+    Stock Available: {{ product.stock }}
+</p>
 
-            <h5>Description</h5>
+<hr>
+
+<h5>Description</h5>
 
             <p>
                 {{ product.description }}
@@ -46,15 +50,25 @@
 
             <div class="mt-4">
 
-                <a href="{% url 'add_to_cart' product.id %}"
-                   class="btn btn-warning">
-                    Add to Cart
-                </a>
+                {% if product.stock > 0 %}
 
-                <a href="{% url 'buy_now' product.id %}"
-                   class="btn btn-danger">
-                    Buy Now
-                </a>
+<a href="{% url 'add_to_cart' product.id %}"
+   class="btn btn-warning">
+    Add to Cart
+</a>
+
+<a href="{% url 'buy_now' product.id %}"
+   class="btn btn-danger">
+    Buy Now
+</a>
+
+{% else %}
+
+<button class="btn btn-secondary" disabled>
+    Out of Stock
+</button>
+
+{% endif %}
 
             </div>
 
