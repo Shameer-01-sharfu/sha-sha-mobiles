@@ -30,6 +30,21 @@ def product_list(request):
         'show_orders': False,
     })
 
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.user.is_authenticated:
+        cart_count = CartItem.objects.filter(
+            user=request.user
+        ).count()
+    else:
+        cart_count = 0
+
+    return render(request, 'store/product_detail.html', {
+        'product': product,
+        'cart_count': cart_count,
+    })
+
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
