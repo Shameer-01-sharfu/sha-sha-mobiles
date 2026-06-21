@@ -117,6 +117,10 @@ def place_order(request):
 
         name = request.POST.get('name')
         phone = request.POST.get('phone')
+
+if len(phone) != 10 or not phone.isdigit():
+    messages.error(request, "Phone number must be exactly 10 digits")
+    return redirect('cart_view')
         address = request.POST.get('address')
 
         cart_items = CartItem.objects.filter(
