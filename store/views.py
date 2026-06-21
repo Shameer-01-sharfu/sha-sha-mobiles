@@ -110,22 +110,20 @@ def order_history(request):
         'show_cart': False,
     })
 
-
 @login_required
 def place_order(request):
     if request.method == 'POST':
 
         name = request.POST.get('name')
         phone = request.POST.get('phone')
-
-if len(phone) != 10 or not phone.isdigit():
-    messages.error(request, "Phone number must be exactly 10 digits")
-    return redirect('cart_view')
         address = request.POST.get('address')
 
-        cart_items = CartItem.objects.filter(
-            user=request.user
-        )
+        # phone validation
+        if len(phone) != 10 or not phone.isdigit():
+            messages.error(request, "Phone number must be exactly 10 digits")
+            return redirect('cart_view')
+
+        cart_items = CartItem.objects.filter(user=request.user)
 
         if not cart_items.exists():
             messages.error(request, "Your cart is empty!")
@@ -174,9 +172,7 @@ Total Amount: ₹{total_price}
         except Exception:
             pass
 
-        CartItem.objects.all().filter(
-            user=request.user
-            ).delete()
+        CartItem.objects.filter(user=request.user).delete()
 
         messages.success(
             request,
