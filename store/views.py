@@ -170,7 +170,9 @@ Total Amount: ₹{total_price}
         except Exception:
             pass
 
-        CartItem.objects.all().delete()
+        CartItem.objects.all().filter(
+            user=request.user
+            ).delete()
 
         messages.success(
             request,
