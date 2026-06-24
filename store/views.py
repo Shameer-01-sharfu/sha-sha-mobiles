@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .models import Product, CartItem, Order
+from .models import Product, CartItem, Order, Wishlist
 
 
 def product_list(request):
@@ -295,3 +295,37 @@ def profile_view(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+@login_required
+def add_to_wishlist(request, product_id):
+
+    product = get_object_or_404(
+        Product,
+        id=product_id
+    )
+
+    Wishlist.objects.get_or_create(
+        user=request.user,
+        product=product
+    )
+
+    messages.success(
+        request,
+        "Added to wishlist ❤️"
+    )
+
+    return redirect('product_list')
+@login_required
+def wishlist_view(request):
+
+    wishlist_items = Wishlist.objects.filter(
+        user=request.user
+    )
+
+    return render(
+        request,
+        'store/wishlist.html',
+        {
+            'wishlist_items': wishlist_items
+        }
+    )
