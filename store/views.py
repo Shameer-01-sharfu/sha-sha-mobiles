@@ -166,6 +166,26 @@ def order_history(request):
     })
 
 @login_required
+def cancel_order(request, order_id):
+
+    order = get_object_or_404(
+        Order,
+        id=order_id,
+        user=request.user
+    )
+
+    if order.status == 'Pending':
+        order.status = 'Cancelled'
+        order.save()
+
+        messages.success(
+            request,
+            "Order cancelled successfully."
+        )
+
+    return redirect('order_history')
+
+@login_required
 def place_order(request):
     if request.method == 'POST':
 

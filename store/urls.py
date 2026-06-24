@@ -26,5 +26,6 @@ urlpatterns = [
     # Orders
     path('checkout/place-order/', views.place_order, name='place_order'),
     path('my-orders/', views.order_history, name='order_history'),
+    path('cancel-order/<int:order_id>/', views.cancel_order, name='cancel_order'),
     path('profile/', views.profile_view, name='profile'),
 ]
