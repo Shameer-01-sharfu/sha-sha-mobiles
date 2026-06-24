@@ -6,10 +6,14 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'customer_name',
-        'customer_phone',
         'product_name',
         'price',
+        'status',
         'created_at'
+    )
+    list_filter = (
+        'status',
+        'created_at',
     )
     readonly_fields = (
         'customer_name',

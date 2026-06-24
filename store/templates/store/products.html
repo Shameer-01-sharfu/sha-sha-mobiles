@@ -202,9 +202,12 @@
                             <small class="text-muted">Shipped to: {{ o.customer_name }} | {{ o.customer_phone }}</small>
                         </div>
                         <div class="text-end">
-                            <div class="fw-bold mb-1">₹{{ o.price }}</div>
-                            <span class="badge bg-success">Order Confirmed</span>
-                        </div>
+    <div class="fw-bold mb-1">₹{{ o.price }}</div>
+
+    <span class="badge bg-primary">
+        {{ o.status }}
+    </span>
+</div>
                     </div>
                 {% endfor %}
             {% else %}
