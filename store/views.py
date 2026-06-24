@@ -395,12 +395,12 @@ def admin_dashboard(request):
     total_users = User.objects.count()
 
     # ⏳ Pending orders
-    pending_orders = Order.objects.filter(status__iexact='pending').count()
+    pending_orders = Order.objects.filter(status__iexact='Pending').count()
 
     # 💰 Revenue (ONLY completed orders)
     total_revenue = Order.objects.filter(
-        status__iexact='completed'
-    ).aggregate(total=Sum('total_price'))['total'] or 0
+        status__iexact='Delivered'
+    ).aggregate(total=Sum('price'))['total'] or 0
 
     # 📊 Optional: completed orders list (future use for charts)
     completed_orders = Order.objects.filter(status__iexact='completed')
