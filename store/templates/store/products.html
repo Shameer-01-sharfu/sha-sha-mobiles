@@ -60,6 +60,10 @@
         My Orders
     </a>
 
+    <a href="{% url 'profile' %}" class="nav-link-item">
+        Profile
+    </a>
+
     {% if user.is_authenticated %}
         <span class="nav-link-item">
             Hi, {{ user.username }}

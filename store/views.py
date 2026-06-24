@@ -274,6 +274,23 @@ def user_login(request):
 
     return render(request, 'store/login.html')
 
+@login_required
+def profile_view(request):
+
+    orders = Order.objects.filter(user=request.user)
+
+    total_orders = orders.count()
+
+    total_spent = sum(
+        order.price
+        for order in orders
+    )
+
+    return render(request, 'store/profile.html', {
+        'total_orders': total_orders,
+        'total_spent': total_spent,
+    })
+
 
 def user_logout(request):
     logout(request)

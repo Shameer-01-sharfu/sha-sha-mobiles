@@ -23,4 +23,5 @@ urlpatterns = [
     # Orders
     path('checkout/place-order/', views.place_order, name='place_order'),
     path('my-orders/', views.order_history, name='order_history'),
+    path('profile/', views.profile_view, name='profile'),
 ]
