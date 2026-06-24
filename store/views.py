@@ -386,3 +386,24 @@ def remove_from_wishlist(request, item_id):
     item.delete()
 
     return redirect('wishlist')
+
+def admin_dashboard(request):
+    total_orders = Order.objects.count()
+    total_products = Product.objects.count()
+    total_users = User.objects.count()
+
+    pending_orders = Order.objects.filter(status='Pending').count()
+
+    total_revenue = 0
+    orders = Order.objects.filter(status='Completed')
+
+    for o in orders:
+        total_revenue += o.total_price
+
+    return render(request, 'store/admin_dashboard.html', {
+        'total_orders': total_orders,
+        'total_products': total_products,
+        'total_users': total_users,
+        'pending_orders': pending_orders,
+        'total_revenue': total_revenue,
+    })
