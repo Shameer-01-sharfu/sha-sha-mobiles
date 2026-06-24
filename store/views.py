@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from .models import Product, CartItem, Order, Wishlist
+from .models import Product, CartItem, Order, Wishlist, Review
 
 
 def product_list(request):
@@ -41,15 +41,33 @@ def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
     if request.user.is_authenticated:
-        cart_count = CartItem.objects.filter(
-            user=request.user
-        ).count()
+        cart_count = CartItem.objects.filter(user=request.user).count()
     else:
         cart_count = 0
+
+    # STEP 2
+    reviews = Review.objects.filter(product=product).order_by('-created_at')
+
+    # STEP 3
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            rating = request.POST.get('rating')
+            comment = request.POST.get('comment')
+
+            Review.objects.create(
+                product=product,
+                user=request.user,
+                rating=rating,
+                comment=comment
+            )
+            return redirect('product_detail', product_id=product.id)
+        else:
+            return redirect('login')
 
     return render(request, 'store/product_detail.html', {
         'product': product,
         'cart_count': cart_count,
+        'reviews': reviews
     })
 
 @login_required

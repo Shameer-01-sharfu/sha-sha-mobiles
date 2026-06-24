@@ -33,42 +33,40 @@
             <h2>{{ product.name }}</h2>
 
             <h3 class="text-success mt-3">
-    ₹{{ product.price }}
-</h3>
+                ₹{{ product.price }}
+            </h3>
 
-<p class="fw-bold text-primary">
-    Stock Available: {{ product.stock }}
-</p>
-
-<hr>
-
-<h5>Description</h5>
-
-            <p>
-                {{ product.description }}
+            <p class="fw-bold text-primary">
+                Stock Available: {{ product.stock }}
             </p>
+
+            <hr>
+
+            <h5>Description</h5>
+
+            <p>{{ product.description }}</p>
 
             <div class="mt-4">
 
                 {% if product.stock > 0 %}
 
-<a href="{% url 'add_to_cart' product.id %}"
-   class="btn btn-warning">
-    Add to Cart
-</a>
+                    <a href="{% url 'add_to_cart' product.id %}"
+                       class="btn btn-warning">
+                        Add to Cart
+                    </a>
 
-<a href="{% url 'buy_now' product.id %}"
-   class="btn btn-danger">
-    Buy Now
-</a>
+                    <a href="{% url 'buy_now' product.id %}"
+                       class="btn btn-danger">
+                        Buy Now
+                    </a>
 
-{% else %}
+                {% else %}
 
-<button class="btn btn-secondary" disabled>
-    Out of Stock
-</button>
+                    <button class="btn btn-secondary" disabled>
+                        Out of Stock
+                    </button>
 
-{% endif %}
+                {% endif %}
 
             </div>
 
@@ -77,6 +75,69 @@
     </div>
 
 </div>
+
+
+<!-- ⭐ REVIEW SECTION START -->
+
+<div class="container mt-4 bg-white p-4 rounded shadow-sm">
+
+    <h4>Add Review</h4>
+
+    {% if user.is_authenticated %}
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Rating</label>
+        <select name="rating" class="form-control" style="width:120px;">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+
+        <br>
+
+        <textarea name="comment"
+                  class="form-control"
+                  placeholder="Write your review"></textarea>
+
+        <br>
+
+        <button type="submit" class="btn btn-success">
+            Submit Review
+        </button>
+    </form>
+
+    {% else %}
+        <p>Please <a href="{% url 'login' %}">login</a> to add review</p>
+    {% endif %}
+
+</div>
+
+<hr>
+
+<div class="container mt-3">
+
+    <h4>Customer Reviews</h4>
+
+    {% for r in reviews %}
+        <div class="border p-3 mb-2 bg-light rounded">
+
+            <b>{{ r.user.username }}</b> - ⭐ {{ r.rating }}
+
+            <p>{{ r.comment }}</p>
+
+            <small>{{ r.created_at }}</small>
+
+        </div>
+    {% empty %}
+        <p>No reviews yet</p>
+    {% endfor %}
+
+</div>
+
+<!-- ⭐ REVIEW SECTION END -->
 
 </body>
 </html>
