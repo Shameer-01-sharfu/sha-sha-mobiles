@@ -56,6 +56,10 @@ def product_detail(request, product_id):
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
+    if product.stock <= 0:
+        messages.error(request, "Product is out of stock")
+        return redirect('product_list')
+
     item, created = CartItem.objects.get_or_create(
         user=request.user,
         product=product,
@@ -197,6 +201,9 @@ def place_order(request):
             product_name=product_names,
             price=total_price,
         )
+        for item in cart_items:
+            item.product.stock -= item.quantity
+            item.product.save()
 
         try:
             subject = "SHA & SHA MOBILES - New Order"
