@@ -127,7 +127,7 @@
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}success{% endif %} alert-dismissible fade show shadow-sm" role="alert">
-                    <strong class="fw-bold">System Notification:</strong> {{ message }}
+                    <strong class="fw-bold">Alert:</strong> {{ message }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             {% endfor %}
