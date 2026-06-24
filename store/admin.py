@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Product, CartItem, Order, Wishlist
-
+from .models import Review
 admin.site.register(Wishlist)
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
@@ -35,3 +35,11 @@ class ProductAdmin(admin.ModelAdmin):
         'stock',
     )
 admin.site.register(CartItem)
+
+from .models import Review
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('product', 'user', 'rating', 'created_at')
+    list_filter = ('rating', 'created_at')
+    search_fields = ('product__name', 'user__username', 'comment')
