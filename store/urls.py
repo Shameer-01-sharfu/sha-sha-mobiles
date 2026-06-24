@@ -16,11 +16,8 @@ urlpatterns = [
     path('cart/', views.cart_view, name='cart_view'),
     path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),
     path('buy-now/<int:product_id>/', views.buy_now, name='buy_now'),
-    path(
-    'wishlist/',
-    views.wishlist_view,
-    name='wishlist'
-),
+    path('wishlist/', views.wishlist_view, name='wishlist'),
+    path('wishlist/remove/<int:item_id>/', views.remove_from_wishlist, name='remove_from_wishlist'),
     path('wishlist/add/<int:product_id>/', views.add_to_wishlist, name='add_to_wishlist'),
     path('cart/increase/<int:item_id>/', views.increase_quantity, name='increase_quantity'),
     path('cart/decrease/<int:item_id>/', views.decrease_quantity, name='decrease_quantity'),

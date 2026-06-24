@@ -329,3 +329,15 @@ def wishlist_view(request):
             'wishlist_items': wishlist_items
         }
     )
+
+@login_required
+def remove_from_wishlist(request, item_id):
+    item = get_object_or_404(
+        Wishlist,
+        id=item_id,
+        user=request.user
+    )
+
+    item.delete()
+
+    return redirect('wishlist')
