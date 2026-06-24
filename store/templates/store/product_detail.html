@@ -124,11 +124,17 @@
     {% for r in reviews %}
         <div class="border p-3 mb-2 bg-light rounded">
 
-            <b>{{ r.user.username }}</b> - ⭐ {{ r.rating }}
+            <div>
+    <b>{{ r.user.username }}</b> -
 
-            <p>{{ r.comment }}</p>
+    {% for i in "12345" %}
+        {% if forloop.counter <= r.rating %}
+            ⭐
+        {% endif %}
+    {% endfor %}
 
-            <small>{{ r.created_at }}</small>
+    <p>{{ r.comment }}</p>
+</div>
 
         </div>
     {% empty %}
