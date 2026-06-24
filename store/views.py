@@ -6,7 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Sum
 from .models import Product, CartItem, Order, Wishlist, Review
 
 
@@ -388,17 +388,22 @@ def remove_from_wishlist(request, item_id):
     return redirect('wishlist')
 
 def admin_dashboard(request):
+
+    # 📦 Total counts
     total_orders = Order.objects.count()
     total_products = Product.objects.count()
     total_users = User.objects.count()
 
-    pending_orders = Order.objects.filter(status='Pending').count()
+    # ⏳ Pending orders
+    pending_orders = Order.objects.filter(status__iexact='pending').count()
 
-    total_revenue = 0
-    orders = Order.objects.filter(status='Completed')
+    # 💰 Revenue (ONLY completed orders)
+    total_revenue = Order.objects.filter(
+        status__iexact='completed'
+    ).aggregate(total=Sum('total_price'))['total'] or 0
 
-    for o in orders:
-        total_revenue += o.total_price
+    # 📊 Optional: completed orders list (future use for charts)
+    completed_orders = Order.objects.filter(status__iexact='completed')
 
     return render(request, 'store/admin_dashboard.html', {
         'total_orders': total_orders,
@@ -406,4 +411,5 @@ def admin_dashboard(request):
         'total_users': total_users,
         'pending_orders': pending_orders,
         'total_revenue': total_revenue,
+        'completed_orders': completed_orders
     })
