@@ -34,6 +34,33 @@
         .btn-buy { background-color: #fb641b; color: white; border: none; padding: 8px; border-radius: 2px; font-weight: 500; text-decoration: none; text-align: center; width: 50%; }
         
         footer { margin-top: 60px; padding: 20px 0; text-align: center; background-color: #fff; border-top: 1px solid #e0e0e0; color: #555; font-size: 14px; }
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .search-container {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+            }
+
+            .nav-menu-links {
+               flex-wrap: wrap;
+               justify-content: center;
+               gap: 10px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            html, body {
+                overflow-x: hidden;
+            }
+        }
     </style>
 </head>
 <body>
