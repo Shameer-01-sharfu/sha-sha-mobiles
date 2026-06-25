@@ -296,17 +296,6 @@
         {% endif %}
     </div>
 </a>
-        {% if p.image %}
-            <img src="{{ p.image.url }}"
-                 alt="{{ p.name }}"
-                 style="width:100%; max-width:220px; height:auto; display:block; margin:auto;">
-        {% else %}
-            <div class="text-muted small">
-                No Live Image Available
-            </div>
-        {% endif %}
-    </div>
-</a>
                         <div class="text-center mt-2">
                             <h6 class="fw-bold mb-1" style="font-size: 1.05rem;">
     <a href="{% url 'product_detail' p.id %}"
