@@ -286,6 +286,7 @@
                         <a href="{% url 'product_detail' p.id %}" class="text-decoration-none">
     <div class="img-box">
         {% if p.image %}
+        <p style="font-size: 10px;">{{ p.image.url }}</p>
             <img src="{{ p.image.url }}"
                  alt="{{ p.name }}"
                  style="width:100%; max-width:220px; height:auto; display:block; margin:auto;">
