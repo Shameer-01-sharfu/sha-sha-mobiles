@@ -27,8 +27,8 @@
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
         .product-card { background: #fff; border-radius: 4px; padding: 15px; border: 1px solid #e0e0e0; display: flex; flex-direction: column; justify-content: space-between; transition: box-shadow 0.2s; min-height: 400px; }
         .product-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .img-box { height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; cursor: pointer; }
-        .img-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .img-box { min-height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; cursor: pointer; }
+        .img-box img { width: auto; max-width: 100%; max-height: 220px; height: auto; display: block; object-fit: contain; }
         .price { font-size: 18px; font-weight: 700; color: #212121; margin: 8px 0; }
         .btn-cart { background-color: #ff9f00; color: white; border: none; padding: 8px; border-radius: 2px; font-weight: 500; text-decoration: none; text-align: center; width: 50%; }
         .btn-buy { background-color: #fb641b; color: white; border: none; padding: 8px; border-radius: 2px; font-weight: 500; text-decoration: none; text-align: center; width: 50%; }
@@ -55,6 +55,16 @@
 
             .products-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .img-box {
+                min-height: 250px;
+            }
+
+            .img-box img {
+                max-height: 250px;
+                width: auto;
+                display: block;
             }
 
             html, body {
