@@ -7,15 +7,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ========================
 # SECURITY
 # ========================
-SECRET_KEY = 'django-insecure-local-dev-key-change-this-in-production'
+SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "")
 
-# TEMPORARY - Error kandupidikka
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
 ALLOWED_HOSTS = [
-    'sha-sha-mobiles.onrender.com',
-    '127.0.0.1',
-    'localhost'
+    "localhost",
+    "127.0.0.1",
+    ".vercel.app",
+    "sha-sha-mobiles.onrender.com",
 ]
 
 # ========================
@@ -110,13 +110,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # ========================
 # CLOUDINARY
 # ========================
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dqhxoykdw',
-    'API_KEY': '795878181251242',
-    'API_SECRET': 'LerLcTqcCENKOmvwnw17hFVGRwM',
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
 }
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 import cloudinary
 
 cloudinary.config(
@@ -129,7 +129,8 @@ cloudinary.config(
 # CSRF
 # ========================
 CSRF_TRUSTED_ORIGINS = [
-    'https://sha-sha-mobiles.onrender.com'
+    "https://*.vercel.app",
+    "https://sha-sha-mobiles.onrender.com",
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
